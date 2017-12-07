@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/lang")
+@WebServlet(urlPatterns = "/lang", name = "LanguageServlet")
 public class LanguageServlet extends HttpServlet{
 
     @Override

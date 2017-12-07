@@ -1,12 +1,6 @@
 package entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
-@AllArgsConstructor
 public class User {
 
     private long id;
@@ -14,6 +8,8 @@ public class User {
     private String password;
     private String email;
     private UserRole role;
+
+    public User() {}
 
     public User(long id, String login, String password, String email, UserRole role) {
         this.id = id;

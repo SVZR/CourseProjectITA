@@ -14,6 +14,10 @@ public class CoinDescription {
     public CoinDescription() {
     }
 
+    public CoinDescription(long id) {
+        this.id = id;
+    }
+
     public CoinDescription(Coin coin, Metal metal, long denomination, long mintage, double weight, double diameter, String imageObverse, String imageReverse) {
         this.coin = coin;
         this.metal = metal;

@@ -6,13 +6,15 @@
 </head>
 <body>
     <%@ include file="header.jsp"%>
-    <h1>${requestScope.country.name}</h1>
+    <h3>${requestScope.country.name}</h3>
     <p>
         <c:forEach var="theme" items="${requestScope.themes}">
-        <h3>${theme.name}</h3>
+        <h4>${theme.name}</h4>
             <c:forEach var="series" items="${requestScope.series}">
                 <c:if test="${theme.id==series.themeId}">
-                    <h5>${series.name}</h5>
+                    <c:if test="${series.name ne 'No theme'}">
+                        <h5>${series.name}</h5>
+                    </c:if>
                     <c:forEach var="coin" items="${requestScope.coins}">
                         <c:if test="${series.id==coin.seriesId}">
                             <a href="${pageContext.request.contextPath}/coin?id=${coin.id}">${coin.name}</a>

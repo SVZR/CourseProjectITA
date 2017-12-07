@@ -11,7 +11,7 @@ import java.io.IOException;
 
 import static util.ServletUtil.createViewPath;
 
-@WebServlet("/sale")
+@WebServlet(urlPatterns = "/sale", name = "SaleServlet")
 public class SaleServlet extends HttpServlet {
 
     @Override

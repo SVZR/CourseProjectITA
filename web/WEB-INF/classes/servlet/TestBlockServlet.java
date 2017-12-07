@@ -3,6 +3,7 @@ package servlet;
 import dto.UserSessionDto;
 import service.CoinDescriptionService;
 import service.CoinService;
+import service.NewsService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,11 +14,11 @@ import java.io.IOException;
 
 import static util.ServletUtil.createViewPath;
 
-@WebServlet(urlPatterns = "/coin", name = "Coin")
-public class CoinServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/testblock", name = "TestBlock")
+public class TestBlockServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        long coinId = Long.valueOf(req.getParameter("id"));
+        long coinId = 1;
         req.setAttribute("coin", CoinService.getInstance().getCoinFullInfo(coinId));
         req.setAttribute("coinDescription", CoinDescriptionService.getInstance().getAllCoinDescriptionsByCoinId(coinId));
         if (req.getSession().getAttribute("currentUser") != null) {
@@ -27,7 +28,7 @@ public class CoinServlet extends HttpServlet {
         }
 
         getServletContext()
-                .getRequestDispatcher(createViewPath("coin"))
+                .getRequestDispatcher(createViewPath("testblock"))
                 .forward(req, resp);
     }
 }

@@ -1,5 +1,6 @@
 package servlet;
 
+import dto.UserSessionDto;
 import entity.User;
 import service.UserService;
 
@@ -12,12 +13,11 @@ import java.io.IOException;
 
 import static util.ServletUtil.createViewPath;
 
-@WebServlet("/login")
+@WebServlet(urlPatterns = "/login", name = "LoginServlet")
 public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getSession().getAttribute("userID");
         getServletContext()
                 .getRequestDispatcher(createViewPath("login"))
                 .forward(req, resp);
@@ -25,11 +25,19 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String inputEmail = req.getParameter("inputEmail");
-        String inputPassword = req.getParameter("inputPassword");
-        long userId = UserService.getInstance().isUserExist(inputEmail, inputPassword);
-        if (userId != -1) {
-            req.getSession().setAttribute("userId", userId);
+        String inputEmail = req.getParameter("useremail");
+        String inputPassword = req.getParameter("userpassword");
+//        if (true) {
+//            req.getSession().setAttribute("currentUser", new UserSessionDto(1, "ADMINISTRATOR"));
+//            resp.sendRedirect("/index");
+//        } else {
+//            resp.sendRedirect("/login");
+//        }
+        System.out.println(inputEmail + " " + inputPassword);
+        UserSessionDto userSessionDto = UserService.getInstance().getUserSessionInfo(inputEmail, inputPassword);
+//        System.out.println(userSessionDto.getUserRole());
+        if (userSessionDto != null) {
+            req.getSession().setAttribute("currentUser", userSessionDto);
             resp.sendRedirect("/index");
         } else {
             resp.sendRedirect("/login");

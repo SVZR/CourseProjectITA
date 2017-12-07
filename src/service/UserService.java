@@ -1,11 +1,11 @@
 package service;
 
 import dao.UserDao;
-import dto.CreateNewUserDto;
-import dto.ViewUserBasicInfoDto;
-import dto.ViewUserLoginInfoDto;
+import dto.*;
 import entity.User;
+import entity.UserRole;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,10 +32,30 @@ public final class UserService {
                 .collect(Collectors.toList());
     }
 
-    public ViewUserLoginInfoDto getUserLoginInfo(String email) {
+    public ViewUserLoginInfoDto getUserLoginInfoByEmail(String email) {
         User user = UserDao.getInstance().findByEmail(email).orElse(null);
         if (user != null) {
-            return new ViewUserLoginInfoDto(user.getId(), user.getEmail(), user.getPassword());
+            System.out.println("ViewUserLoginInfoDto created");
+            return new ViewUserLoginInfoDto(user.getId(), user.getEmail(), user.getPassword(), user.getUserRole().toString());
+        } else {
+            System.out.println("ViewUserLoginInfoDto not created");
+            return null;
+        }
+    }
+
+    public ViewUserFullInfoDto getUserFullInfoByUserName(String username) {
+        User user = UserDao.getInstance().findByUserName(username).orElse(null);
+        if (user != null) {
+            return new ViewUserFullInfoDto(user.getId(), user.getLogin(), user.getEmail(), user.getUserRole().toString());
+        } else {
+            return null;
+        }
+    }
+
+    public ViewUserFullInfoDto getUserFullInfoByUserId(long userId) {
+        User user = UserDao.getInstance().findByUserId(userId).orElse(null);
+        if (user != null) {
+            return new ViewUserFullInfoDto(user.getId(), user.getLogin(), user.getEmail(), user.getUserRole().toString());
         } else {
             return null;
         }
@@ -45,13 +65,24 @@ public final class UserService {
         return UserDao.getInstance().create(new User(dto.getLogin(), dto.getPassword(), dto.getEmail(), dto.getRole())).getId();
     }
 
-    public long isUserExist(String inputEmail, String inputPassword) {
-        ViewUserLoginInfoDto userLoginInfoDto = getUserLoginInfo(inputEmail);
+    public UserSessionDto getUserSessionInfo(String inputEmail, String inputPassword) {
+        ViewUserLoginInfoDto userLoginInfoDto = getUserLoginInfoByEmail(inputEmail);
         if (userLoginInfoDto != null) {
             if (userLoginInfoDto.getPassword().equals(inputPassword)) {
-                return userLoginInfoDto.getId();
+                System.out.println("UserSessionDto created");
+
+                return new UserSessionDto(userLoginInfoDto.getId(), userLoginInfoDto.getUserRole());
             }
         }
-        return -1;
+        System.out.println("UserSessionDto not created");
+        return null;
+    }
+
+    public void changeUserRole(long userID, String newUserRole) {
+        UserDao.getInstance().changeUserRole(userID, newUserRole);
+    }
+
+    public List<String> getAllUserRoles() {
+        return Arrays.stream(UserRole.values()).map(Enum::toString).collect(Collectors.toList());
     }
 }

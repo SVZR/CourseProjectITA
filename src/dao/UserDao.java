@@ -15,7 +15,7 @@ import java.util.Optional;
 
 public class UserDao {
 
-    private static final String USERS_TABLE_NAME = "user";
+    private static final String USERS_TABLE_NAME = "u";
     private static UserDao INSTANCE = null;
 
     private UserDao() {}
@@ -33,7 +33,7 @@ public class UserDao {
     public User create(User user) {
         try (Connection connection = ConnectionManager.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(
-                    "INSERT INTO user (login, password, email, role) " +
+                    "INSERT INTO user (username, userpassword, useremail, role) " +
                             "VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
                 preparedStatement.setString(1, user.getLogin());
                 preparedStatement.setString(2, user.getPassword());
@@ -52,13 +52,13 @@ public class UserDao {
         return user;
     }
 
-    public void changeUserRole(User user, UserRole role) {
+    public void changeUserRole(long userId, String newUserRole) {
         try (Connection connection = ConnectionManager.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(
                     "UPDATE user SET 'role'=? WHERE 'id'=?"))
             {
-                preparedStatement.setLong(1, user.getId());
-                preparedStatement.setString(2, user.getUserRole().toString());
+                preparedStatement.setLong(1, userId);
+                preparedStatement.setString(2, newUserRole);
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -70,7 +70,7 @@ public class UserDao {
         List<User> users = new ArrayList<>();
         try (Connection connection = ConnectionManager.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(
-                    "SELECT * FROM user;")) {
+                    "SELECT * FROM user u;")) {
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     while (resultSet.next()) {
                         users.add(createUserFromResultSet(resultSet));
@@ -86,8 +86,42 @@ public class UserDao {
     public Optional<User> findByEmail(String email) {
         try (Connection connection = ConnectionManager.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(
-                    "SELECT * FROM user WHERE user.email = ?")) {
+                    "SELECT * FROM user u WHERE u.useremail = ?")) {
                 preparedStatement.setString(1, email);
+                try(ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        return Optional.of(createUserFromResultSet(resultSet));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
+    }
+
+    public Optional<User> findByUserName(String username) {
+        try (Connection connection = ConnectionManager.getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(
+                    "SELECT * FROM user u WHERE u.username = ?")) {
+                preparedStatement.setString(1, username);
+                try(ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        return Optional.of(createUserFromResultSet(resultSet));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
+    }
+
+    public Optional<User> findByUserId(long userId) {
+        try (Connection connection = ConnectionManager.getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(
+                    "SELECT * FROM user u WHERE u.id = ?")) {
+                preparedStatement.setLong(1, userId);
                 try(ResultSet resultSet = preparedStatement.executeQuery()) {
                     if (resultSet.next()) {
                         return Optional.of(createUserFromResultSet(resultSet));
@@ -103,9 +137,9 @@ public class UserDao {
     private User createUserFromResultSet(ResultSet resultSet) throws SQLException {
         return new User(
                 resultSet.getLong(USERS_TABLE_NAME + ".id"),
-                resultSet.getString(USERS_TABLE_NAME + ".login"),
-                resultSet.getString(USERS_TABLE_NAME + ".password"),
-                resultSet.getString(USERS_TABLE_NAME + ".email"),
+                resultSet.getString(USERS_TABLE_NAME + ".username"),
+                resultSet.getString(USERS_TABLE_NAME + ".userpassword"),
+                resultSet.getString(USERS_TABLE_NAME + ".useremail"),
                 UserRole.valueOf(resultSet.getString(USERS_TABLE_NAME + ".role")));
     }
 }

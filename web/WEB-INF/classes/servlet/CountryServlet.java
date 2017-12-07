@@ -12,7 +12,7 @@ import java.io.IOException;
 
 import static util.ServletUtil.createViewPath;
 
-@WebServlet("/country")
+@WebServlet(urlPatterns = "/country", name = "CountryServlet")
 public class CountryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

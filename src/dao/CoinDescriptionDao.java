@@ -81,21 +81,11 @@ public final class CoinDescriptionDao {
         coinDescription.setDenomination(resultSet.getLong(COINDESCRIPTION_TABLE_NAME + ".denomination"));
         coinDescription.setWeight(resultSet.getDouble(COINDESCRIPTION_TABLE_NAME + ".weight"));
         coinDescription.setDiameter(resultSet.getDouble(COINDESCRIPTION_TABLE_NAME + ".diameter"));
+        coinDescription.setMintage(resultSet.getLong(COINDESCRIPTION_TABLE_NAME + ".mintage"));
         coinDescription.setImageObverse(resultSet.getString(COINDESCRIPTION_TABLE_NAME + ".image_obverse"));
         coinDescription.setImageReverse(resultSet.getString(COINDESCRIPTION_TABLE_NAME + ".image_reverse"));
         return coinDescription;
     }
 
-    private CoinDescription createCoinDescriptionFromResultSet(ResultSet resultSet) throws SQLException {
-//        return new CoinDescription(
-//                resultSet.getLong(COINDESCRIPTION_TABLE_NAME + ".id"),
-//                resultSet.getLong(COINDESCRIPTION_TABLE_NAME + ".coin_id"),
-//                resultSet.getLong(COINDESCRIPTION_TABLE_NAME + ".metal_id"),
-//                resultSet.getLong(COINDESCRIPTION_TABLE_NAME + ".denomination"),
-//                resultSet.getLong(COINDESCRIPTION_TABLE_NAME + ".mintage"),
-//                resultSet.getLong(COINDESCRIPTION_TABLE_NAME + ".weight"),
-//                resultSet.getLong(COINDESCRIPTION_TABLE_NAME + ".diameter"),
-//                resultSet.getString(COINDESCRIPTION_TABLE_NAME + ".image"));
-        return new CoinDescription();
-    }
+
 }

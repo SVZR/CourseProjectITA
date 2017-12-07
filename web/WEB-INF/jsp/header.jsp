@@ -1,10 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>header</title>
-    <link href="/css/bootstrap.css" rel="stylesheet" media="all">
-    <link href="/css/bootstrap-grid.css" rel="stylesheet" media="all">
-    <link href="/css/bootstrap-reboot.css" rel="stylesheet" media="all">
+    <link href="${pageContext.request.contextPath}/css/bootstrap.css" rel="stylesheet" media="all">
+    <link href="${pageContext.request.contextPath}/css/bootstrap-grid.css" rel="stylesheet" media="all">
+    <link href="${pageContext.request.contextPath}/css/bootstrap-reboot.css" rel="stylesheet" media="all">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -24,9 +25,30 @@
             <li class="nav-item">
                 <a class="nav-link" href="${pageContext.request.contextPath}/sale">Sale</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/login">Login</a>
-            </li>
+
+            <c:if test="${sessionScope.containsKey('currentUser')}">
+                <li class="nav-item">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/my-collection">My collection</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/my-profile">My Profile</a>
+                </li>
+            </c:if>
+            <c:if test="${sessionScope.get('currentUser').userRole eq 'ADMINISTRATOR' or 'MODERATOR'}">
+                <li class="nav-item">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/administration">Administration</a>
+                </li>
+            </c:if>
+            <c:if test="${sessionScope.containsKey('currentUser')}">
+                <li class="nav-item">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/logout">Logout</a>
+                </li>
+            </c:if>
+            <c:if test="${!sessionScope.containsKey('currentUser')}">
+                <li class="nav-item">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/login">Login</a>
+                </li>
+            </c:if>
         </ul>
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

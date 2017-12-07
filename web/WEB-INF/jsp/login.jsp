@@ -26,23 +26,6 @@
 <%@ include file="header.jsp"%>
 <br>
 <br>
-    <%--<h1>Login</h1>--%>
-    <%--<form action="/login" method="post">--%>
-        <%--<p>--%>
-            <%--<label for="username"><fmt:message key="login.username"--%>
-                                               <%--bundle="${currentBundle}"/>: </label>--%>
-            <%--<input type="text" name="username" id="username">--%>
-        <%--</p>--%>
-        <%--<p>--%>
-            <%--<label for="password"><fmt:message key="login.password"--%>
-                                               <%--bundle="${currentBundle}"/>: </label>--%>
-            <%--<input type="password" name="password" id="password">--%>
-        <%--</p>--%>
-        <%--<p>--%>
-            <%--<button type="submit"><fmt:message key="login.button"--%>
-                                               <%--bundle="${currentBundle}"/></button>--%>
-        <%--</p>--%>
-    <%--</form>--%>
 
 <div class="container">
 
@@ -50,22 +33,17 @@
         <h2 class="form-signin-heading">Please sign in</h2>
         <label for="inputEmail" class="sr-only"><fmt:message key="login.email"
                                                              bundle="${currentBundle}"/></label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="<fmt:message key="login.email"
+        <input name="useremail" type="email" id="inputEmail" class="form-control" placeholder="<fmt:message key="login.email"
                                                              bundle="${currentBundle}"/>" required autofocus>
         <label for="inputPassword" class="sr-only"><fmt:message key="login.password"
                                                                 bundle="${currentBundle}"/></label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="<fmt:message key="login.password"
+        <input name="userpassword" type="password" id="inputPassword" class="form-control" placeholder="<fmt:message key="login.password"
                                                                                                  bundle="${currentBundle}"/>" required>
-        <%--<div class="checkbox">--%>
-            <%--<label>--%>
-                <%--<input type="checkbox" value="remember-me"> Remember me--%>
-            <%--</label>--%>
-        <%--</div>--%>
         <button class="btn btn-lg btn-primary btn-block" type="submit"><fmt:message key="login.button"
                                                                                     bundle="${currentBundle}"/></button>
     </form>
 
-</div> <!-- /container -->
+</div>
 
     <p>
         <a href="${pageContext.request.contextPath}/registration">Registration</a>

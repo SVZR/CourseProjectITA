@@ -11,7 +11,7 @@ import java.io.IOException;
 
 import static util.ServletUtil.createViewPath;
 
-@WebServlet("/catalog")
+@WebServlet(urlPatterns = "/catalog", name = "CatalogServlet")
 public class CatalogServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

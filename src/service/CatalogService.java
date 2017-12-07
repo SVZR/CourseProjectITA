@@ -21,11 +21,9 @@ public final class CatalogService {
 
     public ViewCatalogCoinsByCountryDto getCatalogCoinsByCountry(long countryId) {
         ViewCatalogCoinsByCountryDto catalog = new ViewCatalogCoinsByCountryDto();
-
         catalog.setThemes(ThemeService.getInstance().getThemesByCountry(countryId));
         catalog.setSeries(SeriesService.getInstance().getSeriesByCountry(countryId));
         catalog.setCoins(CoinService.getInstance().getCoinsByCountry(countryId));
-
         return catalog;
     }
 }

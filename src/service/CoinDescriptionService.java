@@ -1,6 +1,8 @@
 package service;
 
 import dao.CoinDescriptionDao;
+import dao.CollectionDao;
+import dto.ViewCoinAmountInCollectionDto;
 import dto.ViewCoinDescriptionDto;
 
 import java.util.List;
@@ -33,6 +35,13 @@ public final class CoinDescriptionService {
                         coinDescription.getMintage(),
                         coinDescription.getImageObverse(),
                         coinDescription.getImageReverse()))
+                .collect(Collectors.toList());
+    }
+
+    public List<ViewCoinAmountInCollectionDto> getAmountCoinInCollectionByCoinId(long coinId, long userId) {
+        return CollectionDao.getInstance().findCoinDescriptionAmountInCollectionByCoinId(coinId, userId)
+                .stream()
+                .map(coll -> new ViewCoinAmountInCollectionDto(coll.getCoinDescription().getId(), coll.getAmount()))
                 .collect(Collectors.toList());
     }
 }

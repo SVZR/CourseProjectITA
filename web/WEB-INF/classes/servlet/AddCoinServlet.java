@@ -16,7 +16,7 @@ import java.io.IOException;
 
 import static util.ServletUtil.createViewPath;
 
-@WebServlet("/add-coin")
+@WebServlet(urlPatterns = "/add-coin", name = "AddCoinServlet")
 public class AddCoinServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

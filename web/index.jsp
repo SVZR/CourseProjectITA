@@ -1,17 +1,14 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: kirylhrybouski
-  Date: 19.11.17
-  Time: 19:51
-  To change this template use File | Settings | File Templates.
---%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-  <head>
+<head>
     <title>Numismatic portal</title>
-  </head>
-  <body>
-  <%@include file="/WEB-INF/jsp/header.jsp"%>
-  <p>Нумизматический портал</p>
-  </body>
+</head>
+<body>
+    <%@include file="/WEB-INF/jsp/header.jsp"%>
+    <p>test block</p>
+    <a href="${pageContext.request.contextPath}/testblock">TEST BLOCK</a>
+
+    <p>+header</p>
+</body>
 </html>
