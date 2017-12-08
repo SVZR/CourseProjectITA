@@ -18,14 +18,14 @@ import static util.ServletUtil.createViewPath;
 public class TestBlockServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        long coinId = 1;
-        req.setAttribute("coin", CoinService.getInstance().getCoinFullInfo(coinId));
-        req.setAttribute("coinDescription", CoinDescriptionService.getInstance().getAllCoinDescriptionsByCoinId(coinId));
-        if (req.getSession().getAttribute("currentUser") != null) {
-            UserSessionDto userSessionDto = (UserSessionDto) req.getSession().getAttribute("currentUser");
-            req.setAttribute("coinsInCollection", CoinDescriptionService.getInstance()
-                    .getAmountCoinInCollectionByCoinId(coinId, userSessionDto.getUserId()));
-        }
+//        long coinId = 1;
+//        req.setAttribute("coin", CoinService.getInstance().getCoinFullInfo(coinId));
+//        req.setAttribute("coinDescription", CoinDescriptionService.getInstance().getAllCoinDescriptionsByCoinId(coinId));
+//        if (req.getSession().getAttribute("currentUser") != null) {
+//            UserSessionDto userSessionDto = (UserSessionDto) req.getSession().getAttribute("currentUser");
+//            req.setAttribute("coinsInCollection", CoinDescriptionService.getInstance()
+//                    .getAmountCoinInCollectionByCoinId(coinId, userSessionDto.getUserId()));
+//        }
 
         getServletContext()
                 .getRequestDispatcher(createViewPath("testblock"))

@@ -134,6 +134,19 @@ public class UserDao {
         return Optional.empty();
     }
 
+    public void deleteUser(long userId) {
+        try (Connection connection = ConnectionManager.getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(
+                    "DELETE FROM user u WHERE u.id = ?")) {
+                preparedStatement.setLong(1, userId);
+                preparedStatement.executeUpdate();
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private User createUserFromResultSet(ResultSet resultSet) throws SQLException {
         return new User(
                 resultSet.getLong(USERS_TABLE_NAME + ".id"),

@@ -26,7 +26,6 @@ public final class MyCollectionService {
     }
 
     public void updateCoinInCollection(long userId, long coinDescriptionId, long amount) {
-        CollectionDao.getInstance().updateCoinInCollection(userId, coinDescriptionId, amount);
-        System.out.println("updatecoinservicemethod");
+        CollectionDao.getInstance().updateCoinAmountInCollection(userId, coinDescriptionId, amount);
     }
 }

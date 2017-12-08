@@ -78,8 +78,12 @@ public final class UserService {
         return null;
     }
 
-    public void changeUserRole(long userID, String newUserRole) {
-        UserDao.getInstance().changeUserRole(userID, newUserRole);
+    public void changeUserRole(long userId, String newUserRole) {
+        UserDao.getInstance().changeUserRole(userId, newUserRole);
+    }
+
+    public void deleteUser(long userId) {
+        UserDao.getInstance().deleteUser(userId);
     }
 
     public List<String> getAllUserRoles() {

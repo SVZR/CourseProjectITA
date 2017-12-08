@@ -1,7 +1,10 @@
 package entity;
 
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
+@NoArgsConstructor
 public class News {
     private long id;
     private String text;

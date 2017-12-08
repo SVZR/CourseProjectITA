@@ -30,28 +30,6 @@ public final class CollectionDao {
         return INSTANCE;
     }
 
-//    public List<MyCollection> findAllCoinInCollectionGroupedByCountry(long userId) {
-//        List<MyCollection> myCollections = new ArrayList<>();
-//        try (Connection connection = ConnectionManager.getConnection()) {
-//            try (PreparedStatement preparedStatement = connection.prepareStatement(
-//                    "SELECT SUM(uc.amount), cnt.name, cnt.id FROM user_coindescription uc JOIN user u " +
-//                            "ON uc.user_id = u.id JOIN coindescription cd ON uc.coindescription_id = cd.id " +
-//                            "JOIN coin c ON cd.coin_id = c.id JOIN series s ON c.series_id = s.id JOIN theme t " +
-//                            "ON s.theme_id = t.id JOIN country cnt ON t.country_id = cnt.id AND u.id = ?" +
-//                            "GROUP BY cnt.name;")) {
-//                preparedStatement.setLong(1, userId);
-//                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-//                    while (resultSet.next()) {
-//                        myCollections.add();
-//                    }
-//                }
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return myCollections;
-//    }
-
     public List<MyCollection> findCoinDescriptionAmountInCollectionByCoinId(long coinId, long userId) {
         List<MyCollection> myCollections = new ArrayList<>();
         try (Connection connection = ConnectionManager.getConnection()) {
@@ -96,14 +74,14 @@ public final class CollectionDao {
         }
     }
 
-    public void updateCoinInCollection(long userId, long coinDescriptionId, long amount) {
+    public void updateCoinAmountInCollection(long userId, long coinDescriptionId, long amount) {
         try (Connection connection = ConnectionManager.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(
-                    "UPDATE user_coindescription SET 'amount'=? WHERE 'user_id'= ? AND 'coindescription_id'= ?;")) {
+                    "UPDATE user_coindescription uc SET uc.amount = ? WHERE uc.user_id = ? AND uc.coindescription_id = ?;")) {
                 preparedStatement.setLong(1, amount);
                 preparedStatement.setLong(2, userId);
                 preparedStatement.setLong(3, coinDescriptionId);
-                System.out.println("daoUpdate" + amount + " " + userId + " " + coinDescriptionId);
+                preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
             e.printStackTrace();

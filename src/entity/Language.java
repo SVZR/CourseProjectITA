@@ -9,7 +9,6 @@ public class Language {
     public static Map<String, Locale> LANG = new HashMap<>();
 
     static {
-        LANG.put("bel", new Locale("be", "BY"));
         LANG.put("eng", new Locale("en", "US"));
         LANG.put("rus", new Locale("ru", "RU"));
     }

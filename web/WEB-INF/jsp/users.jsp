@@ -6,7 +6,7 @@
 </head>
 <body>
     <%@ include file="header.jsp"%>
-    <form action="${pageContext.request.contextPath}/usersearch" method="post">
+    <form action="${pageContext.request.contextPath}/user-search" method="post">
         <input type="text" name="username" placeholder="username">
         <button type="submit">Search user</button>
     </form>
@@ -24,14 +24,14 @@
         <br>
         <form action="${pageContext.request.contextPath}/change-user-role">
             <select name="userRole">
-                <c:forEach var="userrole" items="${requestScope.get('userRoles')}">
-                    <option value="${userrole}">${userrole}</option>
+                <c:forEach var="userRole" items="${requestScope.get('userRoles')}">
+                    <option value="${userRole}">${userRole}</option>
                 </c:forEach>
             </select>
-            <button name="changeUserRole" type="submit">Change user role</button>
+            <button name="userId" type="submit" value="${requestScope.get('user').id}">Change user role</button>
         </form>
         <form action="${pageContext.request.contextPath}/delete-user" method="post">
-            <button name="deleteUser" type="submit">Delete user</button>
+            <button name="userId" type="submit" value="${requestScope.get('user').id}">Delete user</button>
         </form>
     </c:if>
 </body>

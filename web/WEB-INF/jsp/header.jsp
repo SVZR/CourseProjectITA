@@ -30,9 +30,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/my-collection">My collection</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/my-profile">My Profile</a>
-                </li>
             </c:if>
             <c:if test="${sessionScope.get('currentUser').userRole eq 'ADMINISTRATOR' or 'MODERATOR'}">
                 <li class="nav-item">

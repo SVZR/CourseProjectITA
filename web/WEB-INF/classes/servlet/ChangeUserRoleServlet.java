@@ -1,6 +1,5 @@
 package servlet;
 
-import dto.ViewUserFullInfoDto;
 import service.UserService;
 
 import javax.servlet.ServletException;
@@ -15,10 +14,8 @@ public class ChangeUserRoleServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String newUserRole = req.getParameter("userRole");
-        Object userObj = req.getAttribute("user");
-        ViewUserFullInfoDto user =userObj instanceof ViewUserFullInfoDto ? ((ViewUserFullInfoDto) userObj) : null;
-        long userId = user.getId();
+        long userId = Long.valueOf(req.getParameter("userId"));
         UserService.getInstance().changeUserRole(userId, newUserRole);
-        resp.sendRedirect("/users");
+        resp.sendRedirect(req.getHeader("Referer"));
     }
 }
