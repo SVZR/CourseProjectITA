@@ -33,8 +33,9 @@ public final class ThemeDao {
     public Theme create(Theme theme) {
         try (Connection connection = ConnectionManager.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(
-                    "INSERT INTO theme (name) VALUES (?)", Statement.RETURN_GENERATED_KEYS)) {
+                    "INSERT INTO theme (name, country_id) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS)) {
                 preparedStatement.setString(1, theme.getName());
+                preparedStatement.setLong(2, theme.getCountry().getId());
                 preparedStatement.executeUpdate();
 
                 ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
@@ -55,8 +56,11 @@ public final class ThemeDao {
                     "SELECT * FROM theme t;")) {
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     while (resultSet.next()) {
+                        Country country = new Country();
+                        country.setId(resultSet.getLong(THEME_TABLE_NAME + ".country_id"));
                         theme.add(new Theme(resultSet.getLong(THEME_TABLE_NAME + ".id"),
-                                resultSet.getString(THEME_TABLE_NAME + ".name")));
+                                resultSet.getString(THEME_TABLE_NAME + ".name"),
+                                country));
                     }
                 }
             }

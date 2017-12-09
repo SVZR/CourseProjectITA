@@ -7,7 +7,7 @@
 <body>
     <%@ include file="header.jsp"%>
     <c:forEach var="country" items="${requestScope.get('countries')}">
-        <a href="country-collection?id=${country.id}">${country.name} (${country.amountCoins})</a>
+        <a href="${pageContext.request.contextPath}/country-collection?id=${country.id}">${country.countryName} (${country.amountOfCoins})</a>
     </c:forEach>
 </body>
 </html>

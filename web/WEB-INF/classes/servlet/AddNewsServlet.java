@@ -11,7 +11,7 @@ import java.io.IOException;
 
 import static util.ServletUtil.createViewPath;
 
-@WebServlet("/add-news")
+@WebServlet(urlPatterns = "/add-news", name = "AddNews")
 public class AddNewsServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -22,8 +22,9 @@ public class AddNewsServlet extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String text = req.getParameter("news");
-        NewsService.getInstance().createNews(text);
-        resp.sendRedirect("/index");
+        String headline = req.getParameter("headline");
+        String text = req.getParameter("text");
+        NewsService.getInstance().createNews(headline, text);
+        resp.sendRedirect(req.getHeader("Referer"));
     }
 }

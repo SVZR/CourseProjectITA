@@ -9,7 +9,5 @@
 <c:forEach var="country" items="${requestScope.countries}">
     <p><a href="${pageContext.request.contextPath}/country?id=${country.id}">${country.name}</a></p>
 </c:forEach>
-<p>тут будет каталог</p>
-<img src="${pageContext.request.contextPath}/resources/Bel.jpg" alt="Республика Беларусь" height="200" width="400">
 </body>
 </html>

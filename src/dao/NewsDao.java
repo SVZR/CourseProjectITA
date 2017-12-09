@@ -8,7 +8,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,9 +34,10 @@ public final class NewsDao {
     public News create(News news) {
         try (Connection connection = ConnectionManager.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(
-                    "INSERT INTO news (news, releasedate) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS)) {
-                preparedStatement.setString(1, news.getText());
-                preparedStatement.setObject(2, news.getReleaseDate());
+                    "INSERT INTO news (headline, news, releasedate) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
+                preparedStatement.setString(1, news.getHeadline());
+                preparedStatement.setString(2, news.getText());
+                preparedStatement.setString(3, news.getReleaseDate().toString());
                 preparedStatement.executeUpdate();
 
                 ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
@@ -53,7 +56,6 @@ public final class NewsDao {
         try (Connection connection = ConnectionManager.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(
                     "SELECT * FROM news n;")) {
-//                preparedStatement.setObject(1, LocalDateTime.now().minusMonths(1));
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     while (resultSet.next()) {
                         news.add(createNewsFromResultSet(resultSet));
@@ -67,15 +69,23 @@ public final class NewsDao {
     }
 
     private News createNewsFromResultSet(ResultSet resultSet) throws SQLException {
-        Object dateObject = resultSet.getObject(NEWS_TABLE_NAME + ".releasedate");
-        LocalDateTime releaseDate;
-        if (dateObject instanceof LocalDateTime) {
-            releaseDate = (LocalDateTime) dateObject;
-        } else {
-            releaseDate = LocalDateTime.now();
-        }
+        String release = resultSet.getString(NEWS_TABLE_NAME + ".releasedate");
+        LocalDateTime releaseDate = LocalDateTime.parse(release, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
         return new News(resultSet.getLong(NEWS_TABLE_NAME + ".id"),
+                resultSet.getString(NEWS_TABLE_NAME + ".headline"),
                 resultSet.getString(NEWS_TABLE_NAME + ".news"),
                 releaseDate);
+    }
+
+    public void delete(News news) {
+        try (Connection connection = ConnectionManager.getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(
+                    "DELETE FROM news WHERE id = ?")) {
+                preparedStatement.setLong(1, news.getId());
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

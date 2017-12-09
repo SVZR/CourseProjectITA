@@ -29,6 +29,7 @@
                                         <span class="input-group-btn">
                                             <button class="btn btn-secondary" type="submit" value="${coinDescription.id}" name="coinDescriptionId">Update amount</button>
                                         </span>
+                                        <c:if test="${requestScope.containsKey('error') && requestScope.get('errorCoinId') == coinDescription.id}">${requestScope.get('error')}</c:if>
                                     </form>
                                 </div>
                             </div>
@@ -43,6 +44,7 @@
                                         <span class="input-group-btn">
                                             <button class="btn btn-secondary" type="submit" value="${coinDescription.id}" name="coinDescriptionId">Update amount</button>
                                         </span>
+                                        <c:if test="${requestScope.containsKey('error') && requestScope.get('errorCoinId') == coinDescription.id}">${requestScope.get('error')}</c:if>
                                     </form>
                                 </div>
                             </div>
@@ -60,6 +62,7 @@
                                     <span class="input-group-btn">
                                             <button class="btn btn-secondary" type="submit" value="${coinDescription.id}" name="coinDescriptionId">Add coin</button>
                                         </span>
+                                    <c:if test="${requestScope.containsKey('error') && requestScope.get('errorCoinId') == coinDescription.id}">${requestScope.get('error')}</c:if>
                                 </form>
                             </div>
                         </div>

@@ -1,21 +1,14 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: kirylhrybouski
-  Date: 29.11.17
-  Time: 18:01
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html>
 <head>
     <title>Login</title>
     <link href="${pageContext.request.contextPath}/css/signin.css" rel="stylesheet">
-
 </head>
 <body>
+<%@ include file="header.jsp"%>
 <fmt:setLocale value="${sessionScope.language}"/>
-<fmt:setBundle basename="translation" var="currentBundle"/>
+<fmt:setBundle basename="translations" var="currentBundle"/>
 <form action="${pageContext.request.contextPath}/lang" method="post">
     <select name="lang" id="lang">
         <option value="rus">РУС</option>
@@ -23,7 +16,6 @@
     </select>
     <button type="submit" name="langSubmit">Change</button>
 </form>
-<%@ include file="header.jsp"%>
 <br>
 <br>
 
@@ -46,7 +38,7 @@
 </div>
 
     <p>
-        <a href="${pageContext.request.contextPath}/registration">Registration</a>
+        <a class="btn btn-lg btn-primary btn-block" style="width: 200px" role="button" href="${pageContext.request.contextPath}/registration"><fmt:message key="login.registration" bundle="${currentBundle}"/> </a>
     </p>
 </body>
 </html>

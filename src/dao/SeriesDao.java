@@ -88,8 +88,11 @@ public final class SeriesDao {
                     "SELECT * FROM series s;")) {
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     while (resultSet.next()) {
+                        Theme theme = new Theme();
+                        theme.setId(resultSet.getLong(SERIES_TABLE_NAME + ".theme_id"));
                         series.add(new Series(resultSet.getLong(SERIES_TABLE_NAME + ".id"),
-                                resultSet.getString(SERIES_TABLE_NAME + ".name")));
+                                resultSet.getString(SERIES_TABLE_NAME + ".name"),
+                                theme));
                     }
                 }
             }

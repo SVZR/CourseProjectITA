@@ -9,7 +9,7 @@ import java.io.IOException;
 
 import static util.ServletUtil.createViewPath;
 
-@WebServlet(urlPatterns = "/administration", name = "AdministrationServlet")
+@WebServlet(urlPatterns = "/administration", name = "Administration")
 public class AdministrationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

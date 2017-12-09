@@ -1,6 +1,6 @@
 package servlet;
 
-import service.UserService;
+import service.MetalService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,14 +11,18 @@ import java.io.IOException;
 
 import static util.ServletUtil.createViewPath;
 
-@WebServlet(urlPatterns = "/sale", name = "SaleServlet")
-public class SaleServlet extends HttpServlet {
-
+@WebServlet(urlPatterns = "/add-metal", name = "AddMetal")
+public class AddMetalServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("users", UserService.getInstance().getAllUsers());
         getServletContext()
-                .getRequestDispatcher(createViewPath("sale"))
+                .getRequestDispatcher(createViewPath("add-metal"))
                 .forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        MetalService.getInstance().addMetal(req.getParameter("metalName"));
+        resp.sendRedirect(req.getHeader("Referer"));
     }
 }

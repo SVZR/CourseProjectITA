@@ -5,7 +5,7 @@
 //import javax.servlet.http.HttpServletResponse;
 //import java.io.IOException;
 //
-//@WebFilter(servletNames = "Unsafe")
+//@WebFilter(servletNames = "UpdateCoinInCollectionServlet")
 //public class BlockerFilter implements Filter {
 //    @Override
 //    public void init(FilterConfig filterConfig) throws ServletException {}

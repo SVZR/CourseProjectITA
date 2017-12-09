@@ -1,12 +1,16 @@
 package service;
 
+import dao.CollectionDao;
 import dao.CountryDao;
 import dto.CreateNewCountryDto;
 import dto.ViewAllCountriesDto;
 import dto.ViewCountryInfoDto;
+import dto.ViewCountryWithCoinsAmountDto;
 import entity.Country;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class CountryService {
@@ -39,5 +43,12 @@ public final class CountryService {
     public ViewCountryInfoDto getCountryById(long id) {
         Country country = CountryDao.getInstance().findById(id).get();
         return new ViewCountryInfoDto(country.getId(), country.getName());
+    }
+
+    public List<ViewCountryWithCoinsAmountDto> getCountriesWithAmountOfUserCoins(long userId) {
+        return CollectionDao.getInstance().findCountryNamesAndSumCoinsInCollection(userId).stream()
+                .map(myCollection -> new ViewCountryWithCoinsAmountDto(myCollection.getId(),
+                        myCollection.getName(), myCollection.getAmount()))
+        .collect(Collectors.toList());
     }
 }

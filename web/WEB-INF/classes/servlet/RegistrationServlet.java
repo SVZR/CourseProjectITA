@@ -1,6 +1,7 @@
 package servlet;
 
 import dto.CreateNewUserDto;
+import dto.UserSessionDto;
 import entity.UserRole;
 import service.UserService;
 
@@ -13,7 +14,7 @@ import java.io.IOException;
 
 import static util.ServletUtil.createViewPath;
 
-@WebServlet(urlPatterns = "/registration", name = "RegistrationServlet")
+@WebServlet(urlPatterns = "/registration", name = "Registration")
 public class RegistrationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -24,13 +25,14 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getParameter("password").equals(req.getParameter("confirmPassword"))) {
-            System.out.println(req.getParameter("login") + " - " + req.getParameter("password") + " - " + req.getParameter("email"));
-            Long createdUserId = UserService.getInstance().createNewUser(createHeroDto(req));
+        long userId = UserService.getInstance().createNewUser(createHeroDto(req));
+        if (userId > 0) {
+            System.out.println(userId);
+            resp.sendRedirect("/login");
         } else {
-            System.out.println("pass != confpass");
+            req.setAttribute("problem", "Something wrong");
+            resp.sendRedirect("/registration");
         }
-        resp.sendRedirect("/registration"/* + createdUserId*/);
     }
     private CreateNewUserDto createHeroDto(HttpServletRequest request) {
         return new CreateNewUserDto(request.getParameter("login"), request.getParameter("password"),

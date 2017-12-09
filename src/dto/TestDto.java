@@ -1,19 +1,16 @@
 package dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.HashMap;
-
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class TestDto {
+
     private HashMap<Long, Long> cdIdAmount;
-
-    public TestDto(HashMap<Long, Long> cdIdAmount) {
-        this.cdIdAmount = cdIdAmount;
-    }
-
-    public HashMap<Long, Long> getCdIdAmount() {
-        return cdIdAmount;
-    }
-
-    public void setCdIdAmount(HashMap<Long, Long> cdIdAmount) {
-        this.cdIdAmount = cdIdAmount;
-    }
 }

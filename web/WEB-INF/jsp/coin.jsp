@@ -12,7 +12,7 @@
             <p>${requestScope.coin.series}</p>
         </c:if>
     <p>${requestScope.coin.coinName}</p>
-    <p>Release date:${requestScope.coin.releaseDate}</p>
+    <p>Release date: ${requestScope.coin.releaseDate}</p>
     <p>Designer: ${requestScope.coin.designer}          Mintage by: ${requestScope.coin.mintageBy}</p>
     <table class="table">
         <tbody>

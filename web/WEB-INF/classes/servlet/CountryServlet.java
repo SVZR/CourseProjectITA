@@ -16,12 +16,12 @@ import static util.ServletUtil.createViewPath;
 public class CountryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Long id = Long.valueOf(req.getParameter("id"));
-        ViewCountryInfoDto country = CountryService.getInstance().getCountryById(id);
+        long countryId = Long.valueOf(req.getParameter("id"));
+        ViewCountryInfoDto country = CountryService.getInstance().getCountryById(countryId);
         req.setAttribute("country", country);
-        req.setAttribute("themes", CatalogService.getInstance().getCatalogCoinsByCountry(id).getThemes()); //get themes by country_id
-        req.setAttribute("series" , CatalogService.getInstance().getCatalogCoinsByCountry(id).getSeries()); //get series by theme_id
-        req.setAttribute("coins", CatalogService.getInstance().getCatalogCoinsByCountry(id).getCoins()); //get coins by series_id
+        req.setAttribute("themes", CatalogService.getInstance().getCatalogCoinsByCountry(countryId).getThemes());
+        req.setAttribute("series" , CatalogService.getInstance().getCatalogCoinsByCountry(countryId).getSeries());
+        req.setAttribute("coins", CatalogService.getInstance().getCatalogCoinsByCountry(countryId).getCoins());
         getServletContext()
                 .getRequestDispatcher(createViewPath("country"))
                 .forward(req, resp);

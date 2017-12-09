@@ -26,4 +26,6 @@ public final class CatalogService {
         catalog.setCoins(CoinService.getInstance().getCoinsByCountry(countryId));
         return catalog;
     }
+
+
 }

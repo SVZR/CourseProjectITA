@@ -5,53 +5,45 @@
     <title>Add coin</title>
 </head>
 <body>
-    <form action="${pageContext.request.contextPath}/add-coin" method="post">
-        <p>Country</p>
-        <select name="country">
-            <c:forEach var="country" items="${requestScope.countries}">
-                <option value="${country.id}">${country.name}</option>
-            </c:forEach>
-        </select>
-        <p>Theme</p>
-        <select name="theme">
-            <c:forEach var="theme" items="${requestScope.themes}">
-                <option value="${theme.id}">${theme.name}</option>
-            </c:forEach>
-        </select>
-        <p>Series</p>
-        <select name="series">
+<%@ include file="header.jsp"%>
+<form action="${pageContext.request.contextPath}/add-coin" method="post">
+    <div class="form-group">
+        <label for="exampleFormControlSelect1">Choose series</label>
+        <select class="form-control" id="exampleFormControlSelect1" name="seriesId">
             <c:forEach var="series" items="${requestScope.series}">
                 <option value="${series.id}">${series.name}</option>
             </c:forEach>
         </select>
-        <p>Coin name</p>
-        <input type="text" name="coinName">
-        <p>Metal</p>
-        <select name="metal">
-            <c:forEach var="metal" items="${requestScope.metals}">
-                <option value="${metal.id}">${metal.name}</option>
-            </c:forEach>
-        </select>
-        <p>Denomination</p>
-        <input type="number" name="denomination">
-        <p>Weight</p>
-        <input type="number" name="weight">
-        <p>Diameter</p>
-        <input type="number" name="diameter">
-        <p>Mintage</p>
-        <input type="number" name="mintage">
-        <p>Date</p>
-        <div name="date">
-            <input type="number" placeholder="Day" name="inputDay" style="display:inline">
-            <input type="number" placeholder="Month" name="inputMonth" style="display:inline">
-            <input type="number" placeholder="Year" name="inputYear" style="display:inline">
+    </div>
+    <a class="btn btn-primary" href="${pageContext.request.contextPath}/add-series" role="button">Add new series</a>
+    <div>
+        <div class="form-group">
+            <label>Coin name</label>
+            <input type="text" class="form-control" placeholder="coin name" name="coinName">
         </div>
-        <p>Minted by</p>
-        <input type="text" name="mintedBy">
-        <p>Obverse</p>
-        <input type="text" name="descriptionObverse">
-        <p>Reverse</p>
-        <input type="text" name="descriptionReverse">
-    </form>
+        <div class="form-group">
+            <label>Release date</label>
+            <input type="datetime-local" class="form-control" placeholder="release date format (YYYY-MM-DD)" name="releaseDate">
+        </div>
+        <div class="form-group">
+            <label>Design</label>
+            <input type="text" class="form-control" placeholder="designer" name="designer">
+        </div>
+        <div class="form-group">
+            <label>Minted By</label>
+            <input type="text" class="form-control" placeholder="minted by" name="mintedBy">
+        </div>
+        <div class="form-group">
+            <label>Description obverse</label>
+            <textarea class="form-control" rows="5" name="descriptionObverse"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Description reverse</label>
+            <textarea class="form-control" rows="5" name="descriptionReverse"></textarea>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Add coin</button>
+    </div>
+</form>
 </body>
 </html>

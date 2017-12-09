@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>header</title>
@@ -22,16 +23,13 @@
             <li class="nav-item">
                 <a class="nav-link" href="${pageContext.request.contextPath}/catalog">Catalog</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/sale">Sale</a>
-            </li>
 
             <c:if test="${sessionScope.containsKey('currentUser')}">
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/my-collection">My collection</a>
                 </li>
             </c:if>
-            <c:if test="${sessionScope.get('currentUser').userRole eq 'ADMINISTRATOR' or 'MODERATOR'}">
+            <c:if test="${(sessionScope.get('currentUserRole') eq 'ADMINISTRATOR') or (sessionScope.get('currentUserRole') eq 'MODERATOR')}">
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/administration">Administration</a>
                 </li>
@@ -47,10 +45,6 @@
                 </li>
             </c:if>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
     </div>
 </nav>
 </body>

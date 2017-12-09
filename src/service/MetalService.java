@@ -4,6 +4,7 @@ import dao.MetalDao;
 import dao.UserDao;
 import dto.ViewAllMetalsDto;
 import dto.ViewUserBasicInfoDto;
+import entity.Metal;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,5 +29,9 @@ public final class MetalService {
         return MetalDao.getInstance().findAll().stream()
                 .map(metalEntity -> new ViewAllMetalsDto(metalEntity.getId(), metalEntity.getName()))
                 .collect(Collectors.toList());
+    }
+
+    public void addMetal(String metalName) {
+        MetalDao.getInstance().create(new Metal(metalName));
     }
 }

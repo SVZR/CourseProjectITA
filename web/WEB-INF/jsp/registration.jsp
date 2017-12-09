@@ -1,27 +1,23 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: kirylhrybouski
-  Date: 25.11.17
-  Time: 0:52
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Registration</title>
+    <link href="${pageContext.request.contextPath}/css/signin.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Регистрация</h1>
-    <form action="${pageContext.request.contextPath}/registration" method="post">
-        <p>Login</p>
-        <input name="login" type="text">
-        <p>Password</p>
-        <input name="password" type="password">
-        <p>Confirm password</p>
-        <input name="confirmPassword" type="password">
-        <p>E-mail</p>
-        <input name="email" type="text">
-        <button type="submit">Register</button>
+    <%@ include file="header.jsp"%>
+    <c:if test="${requestScope.containsKey('problem')}">
+        <h1>${requestScope.problem}</h1>
+    </c:if>
+    <form class="form-signin" action="${pageContext.request.contextPath}/registration" method="post">
+        <h2 class="form-signin-heading">Registration</h2>
+        <label class="sr-only">Login</label>
+        <input name="login" type="text" class="form-control" placeholder="Enter Username" required autofocus>
+        <label class="sr-only">E-mail</label>
+        <input name="email" type="email" class="form-control" placeholder="Enter E-mail" required autofocus>
+        <label class="sr-only">Password</label>
+        <input name="password" type="password" class="form-control" placeholder="Enter password" required>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
     </form>
 </body>
 </html>

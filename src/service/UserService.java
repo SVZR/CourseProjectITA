@@ -28,17 +28,18 @@ public final class UserService {
 
     public List<ViewUserBasicInfoDto> getAllUsers() {
         return UserDao.getInstance().findAll().stream()
-                .map(userEntity -> new ViewUserBasicInfoDto(userEntity.getId(), userEntity.getLogin(), userEntity.getEmail()))
+                .map(userEntity -> new ViewUserBasicInfoDto(userEntity.getId(),
+                        userEntity.getLogin(),
+                        userEntity.getEmail(),
+                        userEntity.getUserRole().toString()))
                 .collect(Collectors.toList());
     }
 
     public ViewUserLoginInfoDto getUserLoginInfoByEmail(String email) {
         User user = UserDao.getInstance().findByEmail(email).orElse(null);
         if (user != null) {
-            System.out.println("ViewUserLoginInfoDto created");
             return new ViewUserLoginInfoDto(user.getId(), user.getEmail(), user.getPassword(), user.getUserRole().toString());
         } else {
-            System.out.println("ViewUserLoginInfoDto not created");
             return null;
         }
     }
@@ -69,12 +70,10 @@ public final class UserService {
         ViewUserLoginInfoDto userLoginInfoDto = getUserLoginInfoByEmail(inputEmail);
         if (userLoginInfoDto != null) {
             if (userLoginInfoDto.getPassword().equals(inputPassword)) {
-                System.out.println("UserSessionDto created");
 
                 return new UserSessionDto(userLoginInfoDto.getId(), userLoginInfoDto.getUserRole());
             }
         }
-        System.out.println("UserSessionDto not created");
         return null;
     }
 
@@ -83,6 +82,8 @@ public final class UserService {
     }
 
     public void deleteUser(long userId) {
+        UserDao.getInstance().deleteUserSale(userId);
+        UserDao.getInstance().deleteUserCoinDescription(userId);
         UserDao.getInstance().deleteUser(userId);
     }
 

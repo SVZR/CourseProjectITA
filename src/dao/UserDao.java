@@ -55,10 +55,10 @@ public class UserDao {
     public void changeUserRole(long userId, String newUserRole) {
         try (Connection connection = ConnectionManager.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(
-                    "UPDATE user SET 'role'=? WHERE 'id'=?"))
+                    "UPDATE user SET role=? WHERE id=?"))
             {
-                preparedStatement.setLong(1, userId);
-                preparedStatement.setString(2, newUserRole);
+                preparedStatement.setString(1, newUserRole);
+                preparedStatement.setLong(2, userId);
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -105,8 +105,10 @@ public class UserDao {
             try (PreparedStatement preparedStatement = connection.prepareStatement(
                     "SELECT * FROM user u WHERE u.username = ?")) {
                 preparedStatement.setString(1, username);
+
                 try(ResultSet resultSet = preparedStatement.executeQuery()) {
                     if (resultSet.next()) {
+                        System.out.println("searchuser");
                         return Optional.of(createUserFromResultSet(resultSet));
                     }
                 }
@@ -137,7 +139,7 @@ public class UserDao {
     public void deleteUser(long userId) {
         try (Connection connection = ConnectionManager.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(
-                    "DELETE FROM user u WHERE u.id = ?")) {
+                    "DELETE FROM user WHERE id = ?")) {
                 preparedStatement.setLong(1, userId);
                 preparedStatement.executeUpdate();
 
@@ -154,5 +156,32 @@ public class UserDao {
                 resultSet.getString(USERS_TABLE_NAME + ".userpassword"),
                 resultSet.getString(USERS_TABLE_NAME + ".useremail"),
                 UserRole.valueOf(resultSet.getString(USERS_TABLE_NAME + ".role")));
+    }
+
+    public void deleteUserCoinDescription(long userId) {
+        try (Connection connection = ConnectionManager.getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(
+                    "DELETE FROM user_coindescription WHERE user_id = ?")) {
+                preparedStatement.setLong(1, userId);
+                preparedStatement.executeUpdate();
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteUserSale(long userId) {
+        try (Connection connection = ConnectionManager.getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(
+                    "DELETE FROM sale, user_coindescription USING sale, user_coindescription " +
+                            "WHERE sale.user_coin_id = user_coindescription.id AND user_coindescription.user_id = ?;")) {
+                preparedStatement.setLong(1, userId);
+                preparedStatement.executeUpdate();
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
