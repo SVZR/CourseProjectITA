@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static util.ServletUtil.createViewPath;
+
 
 @WebServlet(urlPatterns = "/logout", name = "Logout")
 public class LogoutServlet extends HttpServlet {
@@ -15,7 +17,7 @@ public class LogoutServlet extends HttpServlet {
         req.getSession().removeAttribute("currentUser");
         req.getSession().removeAttribute("currentUserRole");
         getServletContext()
-                .getRequestDispatcher("/index.jsp")
+                .getRequestDispatcher(createViewPath("login"))
                 .forward(req, resp);
 
     }
